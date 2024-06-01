@@ -1,4 +1,7 @@
 # Agrasandhani
+
+![Logo](https://github.com/B4S1C-Coder/Agrasandhani/blob/main/agrasandhani_logo.png)
+
 Agrasandhani is a study guidance and assistance tool designed to help students grasp complex topics with ease, interact with their study materials in a more effective and productive way and take advantage of personal study plans and feedback.
 
 ## Tech Stack
