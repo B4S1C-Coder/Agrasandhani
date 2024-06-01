@@ -7,8 +7,8 @@ Agrasandhani is a study guidance and assistance tool designed to help students g
 ## Tech Stack
 - [Django](https://www.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
-- [React](https://react.dev/)
-- [NextJS](https://nextjs.org/)
+- [React JS](https://react.dev/)
+- [Next.js](https://nextjs.org/)
 - [TensorFlow](https://www.tensorflow.org/) / [PyTorch](https://pytorch.org/)
 - [MySQL](https://www.mysql.com/)
 
