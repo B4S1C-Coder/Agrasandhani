@@ -5,7 +5,11 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+
+# backend
 /.backend-env
+/agrasandhaniBackend/agrasandhaniBackend/__pycache__
+/agrasandhaniBackend/user_management/__pycache__
 
 # testing
 /coverage
