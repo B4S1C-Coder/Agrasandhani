@@ -22,36 +22,31 @@ from .serializers import (
 # used for obtaining the access token (that would be used for further requests).
 # Hence, the client can initially only provide username and password.
 class LoginView(KnoxLoginView):
-    authentication_classes = [BasicAuthentication,]
+    authentication_classes = [BasicAuthentication]
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def perform_create(self, serializer):
-        user_serializer = self.serializer_class(data=self.request.data)
-
-        if user_serializer.is_valid():
-            # Encrypt (also salt and hash) the password
-            password = user_serializer.validated_data.get('password')
-            user_serializer.validated_data['password'] = make_password
-
-            # Ensure that the serializer is still valid after password encryption
-            if user_serializer.is_valid():
-                # Create and save the user and user_profile instances
-                user = user_serializer.save()
-                user_profile = UserProfile.objects.create(user=user)
-                serializer.instance = user
+    # def perform_create(self, serializer):        
+    #     # Encrypt (also salt and hash) the password
+    #     password = serializer.validated_data.get('password')
+    #     serializer.validated_data['password'] = make_password(password)
+    
+    #     # Create and save the user and user_profile instances
+    #     user = serializer.save()
+    #     user_profile = UserProfile.objects.create(user=user)
+    #     serializer.instance = user
 
 class GetUserProfileView(APIView):
     authentication_classes = [TokenAuthentication,]
     permission_classes = [permissions.IsAuthenticated,]
 
     def get(self, request, format=None):
-        user_profile = UserProfile.objects.filter(user_id=self.request.user.id)
+        user_profile = UserProfile.objects.filter(user_id=self.request.user.id).first()
 
         if user_profile:
-            user_profile_serializer = UserProfileSerializer(user_profile[0])
+            user_profile_serializer = UserProfileSerializer(user_profile)
             return Response(user_profile_serializer.data, status=status.HTTP_200_OK)
 
         return Response({"detail": "profile not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -59,11 +54,12 @@ class GetUserProfileView(APIView):
 class UpdateUserProfileView(generics.UpdateAPIView):
     authentication_classes = [TokenAuthentication,]
     permission_classes = [permissions.IsAuthenticated,]
+    serializer_class = UserProfileSerializer
 
     def get_object(self):
-        user_profile = UserProfile.objects.filter(user_id=self.request.user.id)
+        user_profile = UserProfile.objects.filter(user_id=self.request.user.id).first()
 
         if user_profile:
-            return user_profile[0]
+            return user_profile
 
         return Response({"detail": "profile not found"}, status=status.HTTP_404_NOT_FOUND)

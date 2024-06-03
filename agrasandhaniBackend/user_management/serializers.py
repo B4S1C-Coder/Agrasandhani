@@ -3,11 +3,23 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(read_only=True)
+    # password = serializers.CharField(read_only=True)
 
     class Meta:
         model = User
         fields = ["id", "username", "email", "password"]
+        extra_kwargs = {'password': {'write_only': True}}
+    
+    def create(self, validated_data):
+        user = User(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        UserProfile.objects.create(user=user)
+        return user
 
 class UserProfileSerializer(serializers.ModelSerializer):
     userid = serializers.ReadOnlyField(source="user.id")
