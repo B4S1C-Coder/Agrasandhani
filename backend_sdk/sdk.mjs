@@ -31,11 +31,29 @@ export default async function getToken(creds) {
     }
 }
 
+export async function createUser(data) {
+    try {
+        const url = URLResolver("create");
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // NOTE: This is a lower level function used by other functions, avoid using
 // it directly.
 export async function authenticatedRequest(
     token, resolverKey, method, includeBody=false,
-    body=null, contentType="application/json"
+    body=null, contentType="application/json", showError=true
 ) {
     // It is assumed that body has already been converted into corresponding
     // format for transmission.
@@ -56,11 +74,19 @@ export async function authenticatedRequest(
         }
 
         const response = await fetch(url, requestOptions);
-        const responseData = await response.json();
-        return responseData;
+
+        // Ensure that response body is not empty.
+        if ((response.body !== null) || (response.status !== 204) && (response.ok)) {
+            const responseData = await response.json();
+            return responseData;
+        }
+        
+        return {"detail": "Request successful. Empty response.", "status": response.status};
 
     } catch (error) {
-        console.log(error);
+        if (showError) {
+            console.log(error);
+        }
         return null;
     }
 }
