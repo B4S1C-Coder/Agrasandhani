@@ -10,8 +10,9 @@
 /.backend-env
 /agrasandhaniBackend/agrasandhaniBackend/__pycache__
 /agrasandhaniBackend/user_management/__pycache__
-/agrasandhaniBackend/user_management/migrations
+/agrasandhaniBackend/user_management/migrations/__pycache__
 /agrasandhaniBackend/agrasandhani.development.db.sqlite3
+/agrasandhaniBackend/creds.txt
 
 # testing
 /coverage

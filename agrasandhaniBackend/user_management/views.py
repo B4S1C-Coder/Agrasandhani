@@ -28,16 +28,6 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    # def perform_create(self, serializer):        
-    #     # Encrypt (also salt and hash) the password
-    #     password = serializer.validated_data.get('password')
-    #     serializer.validated_data['password'] = make_password(password)
-    
-    #     # Create and save the user and user_profile instances
-    #     user = serializer.save()
-    #     user_profile = UserProfile.objects.create(user=user)
-    #     serializer.instance = user
-
 class GetUserProfileView(APIView):
     authentication_classes = [TokenAuthentication,]
     permission_classes = [permissions.IsAuthenticated,]
