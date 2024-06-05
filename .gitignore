@@ -13,6 +13,9 @@
 /agrasandhaniBackend/user_management/migrations/__pycache__
 /agrasandhaniBackend/agrasandhani.development.db.sqlite3
 /agrasandhaniBackend/creds.txt
+/agrasandhaniBackend/agrasandhaniBackend/extremely_critical.py
+/agrasandhaniBackend/question_generation/migrations/__pycache__
+/agrasandhaniBackend/question_generation/__pycache__
 
 # testing
 /coverage

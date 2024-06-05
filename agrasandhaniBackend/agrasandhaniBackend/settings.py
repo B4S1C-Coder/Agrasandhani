@@ -10,6 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import sys
+
+# THIS FILE DOES NOT EXIST IN THE REPO AND SHALL BE MADE LOCALLY BY PROVIDING
+# YOUR OWN API KEY AND CREDS
+
+try:
+    from . import extremely_critical
+    os.environ['ANTHROPIC_API_KEY'] = extremely_critical.ANTHROPIC_API_KEY
+except Exception as err:
+    print(f"Couln't import extremely_critical: {err}\n")
+    print("Did you forget to create extreme_critical.py ?")
+    print("Create it in the same directory as settings.py")
+    sys.exit("Cannot proceed further without credentials.")
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -52,6 +66,7 @@ INSTALLED_APPS = [
     'knox',
     'corsheaders',
     'user_management',
+    'question_generation',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +152,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
