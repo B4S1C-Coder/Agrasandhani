@@ -54,17 +54,22 @@ Text: """
         if file_type == "PDF":
             reader = PdfReader(file_obj)
 
-            extracted_text = ""
+            # print(f"[ LLM - DEBUG ] {len(file_obj)}", file="logs.txt")
+
+            extracted_text = []
 
             def ignore_header_footer(text, cm, tm, fontDict, fontSize):
-                global extracted_text
+                # global extracted_text
                 y = tm[5]
 
                 if y > 50 and y < 720:
-                    extracted_text += text
+                    # extracted_text += text
+                    extracted_text.append(text)
 
             for page in reader.pages:
                 page.extract_text(visitor_text=ignore_header_footer)
+
+            extracted_text = "".join(extracted_text)
 
             return extracted_text
 

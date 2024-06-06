@@ -63,6 +63,8 @@ class GenerateQuestionsFromDocumentView(APIView):
                 uploaded_document_obj.file_exists_irl = True
                 uploaded_document_obj.save()
 
+                file_obj.seek(0)
+
                 # GENERATE QUESTIONS FROM LLM
                 extracted_text = anthropic_claude2_llm.extract_text_from_file(file_obj)
 
@@ -70,6 +72,11 @@ class GenerateQuestionsFromDocumentView(APIView):
                     questions = anthropic_claude2_llm.generate_questions_from_text(extracted_text)
 
                     if type(questions) == dict:
+                        # Save only complete responses
+                        AssociatedQuestions.objects.create(
+                            associated_hash=file_hash,
+                            questions=questions
+                        )
                         # Response from the LLM is complete
                         return Response({"questions": questions, "complete": True},
                                         status=status.HTTP_200_OK)
@@ -97,6 +104,12 @@ class GenerateQuestionsFromDocumentView(APIView):
                 questions = anthropic_claude2_llm.generate_questions_from_text(extracted_text)
 
                 if type(questions) == dict:
+                    # Save only complete responses
+                    AssociatedQuestions.objects.create(
+                        associated_hash=file_hash,
+                        questions=questions
+                    )
+
                     # Response from the LLM is complete
                     return Response({"questions": questions, "complete": True},
                                     status=status.HTTP_200_OK)
@@ -117,7 +130,7 @@ class GenerateQuestionsFromDocumentView(APIView):
 
             # Hash already exists, just give the questions
             if associated_questions:
-                return Response({"questions": associated_questions},
+                return Response({"questions": associated_questions.questions},
                             status=status.HTTP_200_OK)
             
             # Hash doesn't exist make an empty record for this hash and store the
