@@ -64,9 +64,24 @@ class GenerateQuestionsFromDocumentView(APIView):
                 uploaded_document_obj.save()
 
                 # GENERATE QUESTIONS FROM LLM
-                # for now
-                return Response({"detail":"Coming soon."},
-                                    status=status.HTTP_501_NOT_IMPLEMENTED)
+                extracted_text = anthropic_claude2_llm.extract_text_from_file(file_obj)
+
+                if len(extracted_text) > 0:
+                    questions = anthropic_claude2_llm.generate_questions_from_text(extracted_text)
+
+                    if type(questions) == dict:
+                        # Response from the LLM is complete
+                        return Response({"questions": questions, "complete": True},
+                                        status=status.HTTP_200_OK)
+                    
+                    return Response({"questions": questions, "complete": False},
+                                        status=status.HTTP_206_PARTIAL_CONTENT)
+
+
+                return Response({
+                            "detail": "No text could be extracted",
+                            "ERR_IDENT": "NO_TXT_FOUND"
+                            },status=status.HTTP_406_NOT_ACCEPTABLE)
 
             # Upload document object does not exist
             new_uploaded_document_obj = UploadedDocument.objects.create(
@@ -76,9 +91,24 @@ class GenerateQuestionsFromDocumentView(APIView):
             )
 
             # GENERATE QUESTIONS FROM LLM
-            # for now
-            return Response({"detail":"Coming soon."},
-                                status=status.HTTP_501_NOT_IMPLEMENTED)
+            extracted_text = anthropic_claude2_llm.extract_text_from_file(file_obj)
+
+            if len(extracted_text) > 0:
+                questions = anthropic_claude2_llm.generate_questions_from_text(extracted_text)
+
+                if type(questions) == dict:
+                    # Response from the LLM is complete
+                    return Response({"questions": questions, "complete": True},
+                                    status=status.HTTP_200_OK)
+                
+                return Response({"questions": questions, "complete": False},
+                                    status=status.HTTP_206_PARTIAL_CONTENT)
+
+
+            return Response({
+                        "detail": "No text could be extracted",
+                        "ERR_IDENT": "NO_TXT_FOUND"
+                        },status=status.HTTP_406_NOT_ACCEPTABLE)
 
         # File has not been provided, check if the hash exists or not
         else:
