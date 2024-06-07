@@ -41,7 +41,7 @@ function App() {
         )}
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Login onLogin={handleLogin} />} />
+            <Route path="/" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
             <Route path="/home" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Home /></ProtectedRoute>} />
             <Route path="/quiz/*" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Quiz /></ProtectedRoute>} />
             <Route path="/study-plan" element={<ProtectedRoute isLoggedIn={isLoggedIn}><StudyPlan /></ProtectedRoute>} />
