@@ -7,12 +7,12 @@ const QuizList = ({ quizzes }) => {
       <h2>All Quizzes</h2>
       <ul>
         {quizzes.map(quiz => (
-          <Link key={quiz.id} to={`/quiz/${quiz.id}`}>
-            <li>
+          <li key={quiz.id}>
+            <Link to={`/quiz/${quiz.id}`}>
               {quiz.title} - {quiz.attempted ? `Attempted (Score: ${quiz.score})` : 'Unattempted'}
-              {!quiz.attempted && 'Attempt Quiz'}
-            </li>
-          </Link>
+              {!quiz.attempted && ' Attempt Quiz'}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
