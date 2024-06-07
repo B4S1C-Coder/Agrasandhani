@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      
-      if (username === 'student' && password === 'password') {
-        onLogin();
-      } else {
-        setError('Invalid Username Or Password');
-      }
-    };
-  
-    return (
-        <>
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (username === 'student' && password === 'password') {
+      onLogin();
+      navigate('/home'); // Redirect to home after successful login
+    } else {
+      setError('Invalid Username Or Password');
+    }
+  };
+
+  return (
+    <>
       <video src="src/assets/Black Hole.mp4" autoPlay muted loop className='openVideo'></video>
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
@@ -37,8 +40,8 @@ const Login = ({ onLogin }) => {
           <button type="submit">Login</button>
         </form>
       </div>
-      </>
-    );
-  };
-  
-  export default Login;
+    </>
+  );
+};
+
+export default Login;
