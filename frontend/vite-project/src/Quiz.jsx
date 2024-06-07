@@ -50,7 +50,7 @@ const Quiz = () => {
   return (
     <Routes>
       <Route path="/" element={<QuizList quizzes={quizzes} />} />
-      <Route path="/quiz/:id" element={<QuizAttempt quizzes={quizzes} onQuizCompletion={handleQuizCompletion} />} />
+      <Route path=":id" element={<QuizAttempt quizzes={quizzes} onQuizCompletion={handleQuizCompletion} />} />
     </Routes>
   );
 };
