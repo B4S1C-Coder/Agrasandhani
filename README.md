@@ -13,6 +13,8 @@ Agrasandhani is a study guidance and assistance tool designed to help students g
 - [TensorFlow](https://www.tensorflow.org/) / [PyTorch](https://pytorch.org/)
 - [MySQL](https://www.mysql.com/)
 
+>**Note**: For **OCR Recognition** we have used an open source project [Texify](https://github.com/VikParuchuri/texify/). As of now, OCR is only accessible through a dedicated endpoint that accepts images and returns the equivalent Latex expressions of the expressions in the image.
+
 ## Features
 - **OCR Model**
 The OCR model will be trained on a dataset of mathematical expressions, including Fourier series, to recognize and segment the symbols and equations accurately. The model will incorporate techniques such as:
