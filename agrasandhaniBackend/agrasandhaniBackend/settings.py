@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'user_management',
     'question_generation',
+    'ocr_expressions',
 ]
 
 MIDDLEWARE = [

@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user-management/', include('user_management.urls')),
     path('question-generation/', include('question_generation.urls')),
+    path('ocr-expressions/', include('ocr_expressions.urls')),
 ]
