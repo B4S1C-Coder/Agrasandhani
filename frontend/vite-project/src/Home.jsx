@@ -1,7 +1,7 @@
 import React from 'react'
-import 
-{ BsFillArchiveFill, BsFillBellFill}
- from 'react-icons/bs'
+// import 
+// { BsFillArchiveFill, BsFillBellFill}
+//  from 'react-icons/bs'
  import 
  { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
  from 'recharts';
@@ -82,14 +82,14 @@ function Home() {
             <div className='card'>
                 <div className='card-inner'>
                     <h1>Quiz Status:</h1>
-                    <BsFillArchiveFill className='card_icon'/>
+                    {/* <BsFillArchiveFill className='card_icon'/> */}
                 </div>
                 <h3>Attempted - 10/15</h3>
             </div>
             <div className='card'>
                 <div className='card-inner'>
                     <h1>Notifications:</h1>
-                    <BsFillBellFill className='card_icon'/>
+                    {/* <BsFillBellFill className='card_icon'/> */}
                 </div>
                 <h3>5</h3>
             </div>

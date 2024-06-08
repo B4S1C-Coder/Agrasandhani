@@ -5,6 +5,7 @@ const QuizAttempt = ({ quizzes, onQuizCompletion }) => {
   const { id } = useParams();
   const quiz = quizzes.find(q => q.id === parseInt(id));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(0);
 
@@ -14,23 +15,39 @@ const QuizAttempt = ({ quizzes, onQuizCompletion }) => {
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
-  const handleAnswer = (option) => {
-    setAnswers({
-      ...answers,
-      [currentQuestionIndex]: option
-    });
-    if (option === currentQuestion.answer) {
-      setScore(score + 1);
-    }
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
   };
 
   const handleNextQuestion = () => {
+    if (selectedOption === null) return;
+
+    const isCorrect = selectedOption === currentQuestion.answer;
+    setAnswers({
+      ...answers,
+      [currentQuestionIndex]: selectedOption
+    });
+
+    setScore(prevScore => prevScore + (isCorrect ? 1 : 0));
+    setSelectedOption(null);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
   const handleFinishQuiz = () => {
-    const finalScore = (score / quiz.questions.length) * 100;
-    onQuizCompletion(quiz.id, finalScore);
+    if (selectedOption === null) return;
+
+    const isCorrect = selectedOption === currentQuestion.answer;
+    setAnswers({
+      ...answers,
+      [currentQuestionIndex]: selectedOption
+    });
+
+    setScore(prevScore => {
+      const finalScore = prevScore + (isCorrect ? 1 : 0);
+      const percentageScore = (finalScore / quiz.questions.length) * 100;
+      onQuizCompletion(quiz.id, percentageScore);
+      return finalScore;
+    });
   };
 
   return (
@@ -38,13 +55,22 @@ const QuizAttempt = ({ quizzes, onQuizCompletion }) => {
       <h2>{quiz.title}</h2>
       <div>
         <p>{currentQuestion.question}</p>
-        <ul>
+        <form>
           {currentQuestion.options.map((option, index) => (
-            <li key={index} onClick={() => handleAnswer(option)}>
-              {option}
-            </li>
+            <div key={index}>
+              <label>
+                <input
+                  type="radio"
+                  name="option"
+                  value={option}
+                  checked={selectedOption === option}
+                  onChange={() => handleOptionChange(option)}
+                />
+                {option}
+              </label>
+            </div>
           ))}
-        </ul>
+        </form>
         {currentQuestionIndex < quiz.questions.length - 1 ? (
           <button onClick={handleNextQuestion}>Next</button>
         ) : (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getToken } from './sdk.mjs';  // Importing the getToken function from sdk.mjs
+import getToken from './sdk.mjs';  // Importing the getToken function from sdk.mjs
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
