@@ -104,7 +104,11 @@ For sparse checkout:
   - Pull via `git pull origin main`
 
 You can follow a similar procedure for `backend_sdk/` which contains the testing scripts and SDK (not complete yet) for the backend. This is optional.
+
 2. Optionally create a virtual environment (recommended).
+
 3. Install dependencies via (make sure you are in the same directory as `manage.py`) `pip3 install -r requirements.txt`
+
 4. Don't forget to `makemigrations` and `migrate`
+
 5. Start the server via `python3 manage.py runserver 127.0.0.1:5000`
