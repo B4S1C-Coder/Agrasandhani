@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from './sdk.mjs';  // Importing the getToken function from sdk.mjs
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -7,14 +8,20 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (username === 'student' && password === 'password') {
-      onLogin();
-      navigate('/home'); // Redirect to home after successful login
-    } else {
-      setError('Invalid Username Or Password');
+    try {
+      const token = await getToken({ username, password });
+      
+      if (token) {
+        onLogin(token); // Call the onLogin function passed as a prop with the token
+        navigate('/home'); // Redirect to home after successful login
+      } else {
+        setError('Invalid Username Or Password');
+      }
+    } catch (error) {
+      setError('An error occurred during login. Please try again.');
     }
   };
 
