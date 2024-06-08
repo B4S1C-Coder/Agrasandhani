@@ -78,3 +78,18 @@ This project has the potential to revolutionise how students learn and understan
 - **Difficulty Applying Concepts**: Mastering mathematical theory is only half the battle. Students also need to be able to apply concepts to solve problems. Our interactive quizzes and visualisations will help students bridge the gap between theory and practice.
 
 - **Insufficient Feedback and Guidance**: Without regular feedback and guidance, it's easy for students to develop misconceptions or get stuck on challenging concepts. Our AI-powered study plans and quizzes will provide ongoing support and feedback to keep students on track.
+
+## Backend API Endpoints
+1. `admin/` - To navigate to admin site.
+2. `user-management/create/` - POST with username, email and password to create the user.
+3. `user-management/login/`  - POST with username and password as credentials to obtain token.
+
+>**Note**: The requests below must contain the header: `Authorization: Token <Your token>`, the last endpoint will return the token upon success.
+
+4. `user-management/info/` - GET to obtain information such as username, email, bio, phone number of the currently logged in user (identified by the token).
+5. `user-management/update/` - POST with the updated fields to update the specified fields.
+6. `user-management/logout/` - POST to logout. The token will no longer be valid after logout.
+7. `question-generation/generate/` - POST with the file hash to check if the file already exists in the backend server or not. If it exists the questions will be returned otherwise a status of 201 will be returned, after which the file hash and the file must be sent. Upon success generated questions will be returned.
+8. `ocr-expressions/latex/` - POST with the image (file must be an image only) upon success the equivalent latex expression will be returned.
+
+>**Note**: Use key `file` in `files` in the request whenever sending any file(s) to the server.
