@@ -93,3 +93,18 @@ This project has the potential to revolutionise how students learn and understan
 8. `ocr-expressions/latex/` - POST with the image (file must be an image only) upon success the equivalent latex expression will be returned.
 
 >**Note**: Use key `file` in `files` in the request whenever sending any file(s) to the server.
+
+## Backend Setup
+1. Clone the repo via `git clone https://github.com/B4S1C-Coder/Agrasandhani` or optionally you can sparse checkout just the `agrasandhaniBackend/` folder if you wish to set up only the backend.
+For sparse checkout:
+  - Initialize an empty repo via `git init .`
+  - Add remote origin via `git remote add -f origin https://github.com/B4S1C-Coder/Agrasandhani`
+  - Enable sparse checkout via `git config core.sparseCheckout true`
+  - Add the backend folder to sparse checkout via `echo "agrasandhaniBackend/" >> .git/info/sparse-checkout`
+  - Pull via `git pull origin main`
+
+You can follow a similar procedure for `backend_sdk/` which contains the testing scripts and SDK (not complete yet) for the backend. This is optional.
+2. Optionally create a virtual environment (recommended).
+3. Install dependencies via (make sure you are in the same directory as `manage.py`) `pip3 install -r requirements.txt`
+4. Don't forget to `makemigrations` and `migrate`
+5. Start the server via `python3 manage.py runserver 127.0.0.1:5000`
